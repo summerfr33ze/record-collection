@@ -26,9 +26,9 @@ function MyMusic () {
     return(
         <div className="main">
             <div className="left-column">
-                <button>Favorites</button>
-                <button>Have listened</button>
-                <button>Want To Listen</button>
+                <button onClick={navigateToFavorites}>Favorites</button>
+                <button onClick={navigateToHaveListened}>Have listened</button>
+                <button onClick={navigateToWantToListen}>Want To Listen</button>
             </div>
             <div className="content">
                 <div className="my-music">My Music</div>

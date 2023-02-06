@@ -41,6 +41,7 @@ html, body {
     background-color: #C4A484;
     border-radius: 5px;
     border: 1px solid black;
+    margin-top: 10px;
 }
 
 .sign-in {
@@ -51,7 +52,9 @@ html, body {
     font-size: 2rem;
     padding: 5px 10px;
     font-family: indie;
-
+    margin-right: 10px;
+    margin-top: 10px;
+    font-weight: bold;
 
 }
 
@@ -63,7 +66,7 @@ html, body {
     grid-column: 1/2;
     display: flex;
     flex-direction: column;
-    margin-top: 5vh;
+    margin-top: 9vh;
     gap: 2vh;
     
 }
@@ -97,9 +100,26 @@ html, body {
     align-self: center;
     font-size: 3rem;
     font-family: indie;
+    font-weight: bold;
 }
 
 .add-music {
-    top: 0;
-    right: 0;
+    position: absolute;
+    right: 10px;
+    border: none;
+    background-color: white;
+    font-size: 2rem;
+    font-family: indie;
+    width: 185px;
+    padding: 0px;
+}
+
+.popup-form {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.5rem;
+}
+
+.popup-form input {
+    font-size: 1.5rem;
 }

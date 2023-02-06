@@ -1,11 +1,16 @@
-function triggerPopUp(){
+import {app, db} from '../firebase-config.js'
+import { getFirestore} from 'firebase/firestore'
+import Popup from "./popup.js"
 
-}
+
+
+
+
 
 function Favorites() {
     return (
         <div>
-            <button className="add-music" onClick={triggerPopUp}></button>
+            <Popup />
 
             
 
@@ -16,12 +21,18 @@ function Favorites() {
 }
 function HaveListened(){
 return (
-        <button className="add-music" onClick={triggerPopUp}></button>
+        <div>
+            <Popup />
+        </div>
+        
+        
     )
 }
 function WantToListen(){
     return (
-        <button className="add-music" onClick={triggerPopUp}></button>
+        <div>
+            <Popup />
+        </div>
     )
 }
 
