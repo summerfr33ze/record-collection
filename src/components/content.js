@@ -1,58 +1,82 @@
 import {app, db} from '../firebase-config.js'
 import { getFirestore} from 'firebase/firestore'
-import Popup from "./popup.js"
+
 import {setDoc, doc, getDocs, collection} from 'firebase/firestore'
 import {useRef, useEffect, useState, React} from 'react'
+import uniqid from 'uniqid'
+import { Card } from 'react-bootstrap'
 
 
-
-
-
-function Favorites() {
-
-const [albumArray, setAlbumArray] = useState([])
-
-  
+function Favorites(props) {
     return (
-        <div>
-        <div>
-            
+
+            <div className="record-collection">
+        
+
                 {
-                    albumArray.map((album) => {
+                    props.albumArray.map((album) => {
                         return (
-                        <div className="album-card">
-                        <img className= "album-art" src={album.art}></img>
-                        <div>{album.title}</div>
-                        <div>{album.band}</div>
-                        <div>{album.year}</div>
-                        </div>
+                        
+                        <Card key={uniqid()} style={{width: '13rem'}}>
+                            <Card.Img variant="top" src={album.art} />
+                            <Card.Body>
+                            <Card.Title>{album.title}</Card.Title>
+                            <Card.Text>{album.band}</Card.Text>
+                            <Card.Text>{album.year}</Card.Text>
+                            </Card.Body>
+                        </Card>
                         )
                     })
                 }
             </div>
-            
-            <Popup albumArray={albumArray} setAlbumArray={setAlbumArray}/>
-
-        </div>
-        
     )
 }
 
 
-function HaveListened(){
+function HaveListened(props){
 return (
-        <div>
-            <Popup />
-        </div>
+    <div className="record-collection">
         
-        
+
+    {
+        props.albumArray.map((album) => {
+            return (
+            
+            <Card key={uniqid()} style={{width: '13rem'}}>
+                <Card.Img variant="top" src={album.art} />
+                <Card.Body>
+                <Card.Title>{album.title}</Card.Title>
+                <Card.Text>{album.band}</Card.Text>
+                <Card.Text>{album.year}</Card.Text>
+                </Card.Body>
+            </Card>
+            )
+        })
+    }
+</div>
     )
 }
-function WantToListen(){
+function WantToListen(props){
     return (
-        <div>
-            <Popup />
-        </div>
+        <div className="record-collection">
+        
+
+        {
+            props.albumArray.map((album) => {
+                return (
+                
+                <Card key={uniqid()} style={{width: '13rem'}}>
+                    <Card.Img variant="top" src={album.art} />
+                    <Card.Body>
+                    <Card.Title>{album.title}</Card.Title>
+                    <Card.Text>{album.band}</Card.Text>
+                    <Card.Text>{album.year}</Card.Text>
+                    </Card.Body>
+                </Card>
+                )
+            })
+        }
+    </div>
     )
 }
 

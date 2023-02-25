@@ -1,8 +1,9 @@
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
-import {app, db} from '../firebase-config.js'
+import {db, auth} from '../firebase-config.js'
 import {setDoc, doc, getDocs, collection} from 'firebase/firestore'
 import {useRef, useEffect, useState, React} from 'react'
+
 
 
 /* es-lint disable */
@@ -14,16 +15,15 @@ const title = useRef(null)
 const band = useRef(null)
 const year = useRef(null)
 const albumArt = require('album-art')
+const user =  auth.currentUser
 
+const hasHappenedOnce = useState(false)
 
 
 async function writeToFirebase(event){
   event.preventDefault()
-  let coverArt
-  await albumArt(`${band.current.value}`, {album: `${title.current.value}`}).then(function(response){
-    coverArt = response
-  })
-  await setDoc(doc(db, "albums", `${title.current.value}`),
+  const coverArt = await albumArt(`${band.current.value}`, {album: `${title.current.value}`})
+  await setDoc(doc(db, `${user.email}`, `${props.currentCollection}`, "albums", `${title.current.value}`),
   {
     art: `${coverArt}`,
     title: `${title.current.value}`,
@@ -33,18 +33,34 @@ async function writeToFirebase(event){
 
   getRecordCollection()
 
+
 }
 
 async function getRecordCollection(event){
   props.setAlbumArray([])
-  const querySnapshot = await getDocs(collection(db, "albums" ))
+  const querySnapshot = await getDocs(collection(db, `${user.email}`, `${props.currentCollection}`, "albums"  ))
+  let tempArray = []
   querySnapshot.forEach((doc) => {
-    props.setAlbumArray([...props.albumArray, doc.data()])
-
+    tempArray.push(doc.data())
   })
-
+  props.setAlbumArray(tempArray)
 }
 
+
+
+useEffect(() => {
+  async function getRecordCollectionAtInitialRender(){
+    props.setAlbumArray([])
+  const querySnapshot = await getDocs(collection(db, `${user.email}`, `${props.currentCollection}`, "albums" ))
+  let tempArray = []
+  querySnapshot.forEach((doc) => {
+    tempArray.push(doc.data())
+  })
+  props.setAlbumArray(tempArray)
+  }
+
+  getRecordCollectionAtInitialRender()
+}, [props.currentCollection, user.email]) 
 
   
   return (
