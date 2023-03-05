@@ -4,8 +4,9 @@ import {setDoc, doc, getDocs, collection} from 'firebase/firestore'
 import {useRef, useEffect, useState, React} from 'react'
 import {Routes, Route, useNavigate} from 'react-router-dom'
 import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, connectAuthEmulator} from 'firebase/auth';
-
+import {Form, Button} from 'react-bootstrap'
 import MyMusic from './my-music.js'
+
 
 
 function Login (props) {
@@ -49,18 +50,24 @@ const navigateToMyMusic = () => {
     
       
       return (
-    <div>
+    <div className="login-page">
         <ErrorPopup />
-        <div>
-        <button className="new-user" onClick={navigateToCreateAccount}>New User?</button>
-        <form className="login-form">
-            <label htmlFor="email">Email</label>
-            <input id="email" ref={email}></input>
-            <label htmlFor="password">Password</label>
-            <input id="password" ref={password}></input>
-            
-            <button className="submitBtn" onClick={(event) => {loginEmailPassword(event)}}>Log In</button>
-        </form>
+        <div className="login-form">
+
+        <div className="log-in-title">
+                <span className="span1">Record</span>
+                <span>Collection</span>
+        </div>
+        
+        <Form>
+            <Form.Label htmlFor="email">Email</Form.Label>
+            <Form.Control type="email" ref={email}></Form.Control>
+            <Form.Label htmlFor="password">Password</Form.Label>
+            <Form.Control id="password" ref={password}></Form.Control>
+            <Button variant="secondary" className="login-form-button" onClick={(event) => {loginEmailPassword(event)}}>Log In</Button>
+        </Form>
+
+        <Button variant="secondary" className="new-user-button"  onClick={navigateToCreateAccount}>New User?</Button>
         </div>
 
         

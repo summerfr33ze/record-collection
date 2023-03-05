@@ -3,7 +3,7 @@ import 'reactjs-popup/dist/index.css';
 import {db, auth} from '../firebase-config.js'
 import {setDoc, doc, getDocs, collection} from 'firebase/firestore'
 import {useRef, useEffect, useState, React} from 'react'
-
+import {Form, Button} from 'react-bootstrap'
 
 
 /* es-lint disable */
@@ -67,18 +67,18 @@ useEffect(() => {
 
   <Popup trigger={<button className="add-music">+ add music</button>} >
     <div>
-        <form className="popup-form">
-            <label htmlFor="album-name">Album</label>
-            <input type="text" name="album-name" ref={title}></input>
+        <Form className="popup-form">
+            <Form.Label htmlFor="album-name">Album</Form.Label>
+            <Form.Control type="text" name="album-name" ref={title}></Form.Control>
 
-            <label htmlFor="band">Band</label>
-            <input type="text" name="band" ref={band}></input>
+            <Form.Label htmlFor="band">Band</Form.Label>
+            <Form.Control type="text" name="band" ref={band}></Form.Control>
 
-           <label htmlFor="year">Year</label>
-            <input type="text" name="year" ref={year} ></input>
+           <Form.Label htmlFor="year">Year</Form.Label>
+            <Form.Control type="text" name="year" ref={year} ></Form.Control>
 
-            <button onClick={(event) => writeToFirebase(event)}>Submit</button>
-        </form>
+            <Button variant="secondary" className="login-form-button" onClick={(event) => writeToFirebase(event)}>Submit</Button>
+        </Form>
     </div>
   </Popup>
 );

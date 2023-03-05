@@ -6,13 +6,17 @@ import { onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWith
 connectAuthEmulator } from 'firebase/auth'
 import Popup from './popup.js'
 import Login from './login-page.js'
+import Review from './review.js'
 import CreateAccount from './create-account.js'
 import {useRef, useEffect, useState, React} from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 function App() {
 
-    
+  const [currentAlbum, setCurrentAlbum] = useState(null)
+  
   
   
   return (
@@ -20,7 +24,10 @@ function App() {
       <Routes>
         <Route path="*" element={<Login  />}></Route>
         <Route path="/create-account/*" element={ <CreateAccount />}></Route>
-        <Route path="/my-music/*" element={<MyMusic />}></Route>
+        <Route path="/my-music/*" element={<MyMusic setCurrentAlbum={setCurrentAlbum} currentAlbum={currentAlbum} />}></Route>
+        <Route path="/review/*" element={<Review setCurrentAlbum={setCurrentAlbum} currentAlbum={currentAlbum}/>}></Route>
+        
+
       </Routes>
     </div>
     

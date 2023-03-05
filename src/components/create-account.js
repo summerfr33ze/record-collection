@@ -1,10 +1,11 @@
 import ErrorPopup from './error-popup.js'
 import {app, db, auth} from '../firebase-config.js'
-import {setDoc, doc, getDocs, collection} from 'firebase/firestore'
+import {setDoc, doc, getDocs, collection, waitForPendingWrites} from 'firebase/firestore'
 import {useRef, useEffect, useState, React} from 'react'
 import { getAuth, onAuthStateChanged, signOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, connectAuthEmulator} from 'firebase/auth';
 import {Routes, Route, useNavigate} from 'react-router-dom'
 import Login from './login-page.js'
+import {Form, Button} from "react-bootstrap"
 
 function CreateAccount (props) {
     const email = useRef(null)
@@ -23,41 +24,42 @@ function CreateAccount (props) {
         event.preventDefault()
         const newEmail = email.current.value
         const newPassword = password.current.value
-    
-        try {
-            await createUserWithEmailAndPassword(auth, newEmail, newPassword).then(
-             navigateToLogin(), console.log("hello")
-            )
-
+        const newConfirmPassword = confirmPassword.current.value
+        
+    if(newPassword === newConfirmPassword){
             
-        }
-        catch(error) {
-            console.log(`Error: ${error}`)
-            triggerErrorPopUp(error)
-        }
+                await createUserWithEmailAndPassword(auth, newEmail, newPassword).then(
+                 navigateToLogin()
+                )
     }
-    
-    const triggerErrorPopUp = (error) => {
-        setUserErrorOccurred(true)
-        setCreateAccountError(error)
+
+    else  {
+        triggerErrorPopUp()
+    }
+    }
+
+    const triggerErrorPopUp = () => {
+        setCreateAccountError("passwords don't match")
     }
       
       return (
-        <div>
-        <ErrorPopup userErrorOccurred={userErrorOccurred} error={createAccountError}/>
-        <div>
-            <div></div>
-            <form className="login-form">
-                <label htmlFor="email">Email</label>
-                <input id="email" ref={email}></input>
-                <label htmlFor="password">Password</label>
-                <input id="password" ref={password}></input>
+        <div className="login-page">
+        <ErrorPopup error={createAccountError}/>
+        
+            
+            <Form >
+            <Form.Label htmlFor="email">Email</Form.Label>
+            <Form.Control type="email" ref={email}></Form.Control>
+            <Form.Label htmlFor="password">Password</Form.Label>
+            <Form.Control id="password" ref={password}></Form.Control>
+            <Form.Label htmlFor="confirm-password">Confirm Password</Form.Label>
+            <Form.Control id="confirm-password" ref={confirmPassword}></Form.Control>
 
-                <button className="submitBtn" onClick={(event) => {createAccount(event)}}>Create Account</button>
-            </form>
+            <Button variant="secondary" className="login-form-button" onClick={(event) => {createAccount(event)}}>Create Account</Button>
+            </Form>
 
             
-        </div>
+        
         </div>
       
     );

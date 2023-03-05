@@ -13,6 +13,7 @@ function MyMusic (props) {
         navigate('*/favorites')
         setCurrentCollection("favorites")
     }
+    
     const navigateToHaveListened = () => {
         navigate('*/have-listened')
         setCurrentCollection("have-listened")
@@ -30,6 +31,7 @@ function MyMusic (props) {
     const [isInitialRender, setIsInitialRender] = useState(true)
     const [albumArray, setAlbumArray] = useState([])
     const [currentCollection, setCurrentCollection] = useState("favorites")
+    
 
     useEffect(() =>{
         if (isInitialRender) {
@@ -58,11 +60,14 @@ function MyMusic (props) {
             </div>
       </div>
         <div className="main">
+            
             <div className="left-column" >
                 <Button variant="secondary" size="lg" onClick={navigateToFavorites}>Favorites</Button>
                 <Button variant="secondary" size="lg"  onClick={navigateToHaveListened}>Have listened</Button>
                 <Button variant="secondary"  size="lg" onClick={navigateToWantToListen}>Want To Listen</Button>
             </div>
+            
+            
             <div className="content">
                 <div className="content-header">
                 <div className="my-music">My Music</div>
@@ -73,9 +78,9 @@ function MyMusic (props) {
 
 
                 <Routes>
-                    <Route path="*/favorites" element={<Favorites albumArray={albumArray} />}></Route>
-                    <Route path="*/have-listened" element={<HaveListened albumArray={albumArray}/>}></Route>
-                    <Route path="*/want-to-listen" element={<WantToListen albumArray={albumArray}/>}></Route>
+                    <Route path="*/favorites/*" element={<Favorites albumArray={albumArray} setCurrentAlbum={props.setCurrentAlbum} currentAlbum={props.currentAlbum} />}></Route>
+                    <Route path="*/have-listened" element={<HaveListened albumArray={albumArray} setCurrentAlbum={props.setCurrentAlbum} currentAlbum={props.currentAlbum}/>}></Route>
+                    <Route path="*/want-to-listen" element={<WantToListen albumArray={albumArray} setCurrentAlbum={props.setCurrentAlbum} currentAlbum={props.currentAlbum}/>}></Route>
                 </Routes>
             </div>
         </div> 
